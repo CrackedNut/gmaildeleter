@@ -1,0 +1,142 @@
+{
+   "id":"1675ca17cbd2f967",
+   "threadId":"1675ca17cbd2f967",
+   "labelIds":[
+      "CATEGORY_PERSONAL",
+      "INBOX"
+   ],
+   "snippet":"Helo",
+   "historyId":"1024158",
+   "internalDate":"1543447320000",
+   "payload":{
+      "partId":"",
+      "mimeType":"multipart/alternative",
+      "filename":"",
+      "headers":[
+         {
+            "name":"Delivered-To",
+            "value":"luigip2010@gmail.com"
+         },
+         {
+            "name":"Received",
+            "value":"by 2002:a9d:1905:0:0:0:0:0 with SMTP id j5csp1714380ota;        Wed, 28 Nov 2018 15:22:26 -0800 (PST)"
+         },
+         {
+            "name":"X-Received",
+            "value":"by 2002:ab0:15e2:: with SMTP id j31mr14505938uae.50.1543447346253;        Wed, 28 Nov 2018 15:22:26 -0800 (PST)"
+         },
+         {
+            "name":"ARC-Seal",
+            "value":"i=1; a=rsa-sha256; t=1543447346; cv=none;        d=google.com; s=arc-20160816;        b=pseIKoZ3jD0+oWUV7SrwfuEh1S599gOAYC0UAOYfXIi6ets0K9JGaJ2LACj2e1pw6q         E7PgGec3QMJtuwtPrjaWvjJl8M5Loge8Xxd1/ADP7GxCAMk31NmPta6qY+LqjmbmiRDH         jPptcVPUdf9ylqlqcT7MgYsXnctJqKIVErHZ5xlbHq2YOt39PAvNDdMHVABWmk+YxYRe         3NuazV5SpSj9yfpHDl9n9ZLJvEIqmIikfx7TnJXaFIOvhCm7SSGwpcosVF2B9LPWnero         05200iVsFPtFmlC3zJhBoqHARQjF85P9Ej+k+4O7YVgZJjHrbaZMSN1poWOoPf95/GDi         YlQg=="
+         },
+         {
+            "name":"ARC-Message-Signature",
+            "value":"i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;        h=to:subject:message-id:date:from:mime-version:dkim-signature;        bh=gWi+gIwgsbDwdxbHxXVCaZxzcsCH8DxGbAXL+Ol7G8g=;        b=c5+ZEJM77j4L7lC3cJU4kGKSBvj7CcuMjSCjO8Bt3Rb303VAtY0Hp9iPMurEORm0df         pP89tdLmehwuC1EOAigYG1TmBiKpn5AFtyhe2IlUePlspZPl89QJVHqD6muqRZYkQnpZ         IkP8b5hell5sYOBZEhi91CpIgLxYc11IA7KJDVq1JonbLZELdZ3c3dpdJy3O+80vDHT8         N19sFfatNNnrfxiixLqUKUyIUXXSp3oMYzxzrJykGDKAp9fO4b5lAVKZWOZXn1a3ijpo         KmOOEAB2X/d56YYtAr5ofMS673C6lxnsc4XNvZ0UZyI6neC/BvZvcwV33EFOWN5PioZQ         +2Ew=="
+         },
+         {
+            "name":"ARC-Authentication-Results",
+            "value":"i=1; mx.google.com;       dkim=pass header.i=@gmail.com header.s=20161025 header.b=IEOPJBt4;       spf=pass (google.com: domain of luigip20101@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=luigip20101@gmail.com;       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com"
+         },
+         {
+            "name":"Return-Path",
+            "value":"\u003cluigip20101@gmail.com\u003e"
+         },
+         {
+            "name":"Received",
+            "value":"from mail-sor-f65.google.com (mail-sor-f65.google.com. [209.85.220.65])        by mx.google.com with SMTPS id i8sor31322uak.11.2018.11.28.15.22.26        for \u003cluigip2010@gmail.com\u003e        (Google Transport Security);        Wed, 28 Nov 2018 15:22:26 -0800 (PST)"
+         },
+         {
+            "name":"Received-SPF",
+            "value":"pass (google.com: domain of luigip20101@gmail.com designates 209.85.220.65 as permitted sender) client-ip=209.85.220.65;"
+         },
+         {
+            "name":"Authentication-Results",
+            "value":"mx.google.com;       dkim=pass header.i=@gmail.com header.s=20161025 header.b=IEOPJBt4;       spf=pass (google.com: domain of luigip20101@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=luigip20101@gmail.com;       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com"
+         },
+         {
+            "name":"DKIM-Signature",
+            "value":"v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=20161025;        h=mime-version:from:date:message-id:subject:to;        bh=gWi+gIwgsbDwdxbHxXVCaZxzcsCH8DxGbAXL+Ol7G8g=;        b=IEOPJBt4wDRkAYMySC7jD4wLzKSqHymo4Ynj6hzFHptrKB60tyB4WrpByMx0q83Ai+         ghA9Tc2Ujy+KBCyUqzevolhWH3QxfpZJ/Kp/IsBC+0K0AjlYgJW0TFaLRG14Xmip0z2t         zWNoDTyeTTHAhzVTAAT0uzpNHi7G14FF+cXK8+bLAcl96kwTetubN5ynl5Sdxm/V+Xpg         2dHGhA8un0ZSOCpmQWlaGQgzczgslyerE3KGWTW0rUBw/3R84FFw7aVMfkvYb3vjZUeP         7HRI74RasMAtNRpTUBs4kBW13P2gemeCpIXqXCmup1wYNRyr9FOZZ1hyk5XAgxbR2jDt         8lRg=="
+         },
+         {
+            "name":"X-Google-DKIM-Signature",
+            "value":"v=1; a=rsa-sha256; c=relaxed/relaxed;        d=1e100.net; s=20161025;        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;        bh=gWi+gIwgsbDwdxbHxXVCaZxzcsCH8DxGbAXL+Ol7G8g=;        b=FrkuX/FDM1WSps3S1IGQOu1pm9bg/wcCdguI8iSK5SePvY0KoEQcqRIBY4t0jnT3kC         1GmLa0TT5jBgWfl8v82xdtoo+64NBaRwpoEfZqHzstYgG4fO+GCNfCN2GVuSi0xloY77         lUXdvyH4XaByRFKHZnDL39XDeLpbCFENtmvToayJfn+X4fWqd9LoQfJVfwbS8NaL4Aaf         Z+pq8LLmJvkjg6iJbqrJCbxB6cWYDLKEGO77DBtoUNaR2DiuKIH5Y82G0J90mtbm3sbe         hlKf4wJAaZ/WVSuSnk1eQsbHNdV8yOAVJmSsQclaV7YVPimkJa33zQOU+pcRhGpvnnCK         1n4g=="
+         },
+         {
+            "name":"X-Gm-Message-State",
+            "value":"AA+aEWbhmbUgq29hhhzRVkLy5OLuokydFqJVDsoHmXUyCv1oGA+wS9Qg 9jCCS0S9Xc2XL4I8DwCrvaAmuIFDcuDo+eZRHRnBEA=="
+         },
+         {
+            "name":"X-Google-Smtp-Source",
+            "value":"AFSGD/V2odlxx16ymI6A2DLbKuWhGkfkgm6T+ptw6HLHARh66Wi7yuQTSqMCOVFaLbZulTRm7XmTjJV4Q2ba1IIyj6Q="
+         },
+         {
+            "name":"X-Received",
+            "value":"by 2002:ab0:650e:: with SMTP id w14mr16565787uam.83.1543447345725; Wed, 28 Nov 2018 15:22:25 -0800 (PST)"
+         },
+         {
+            "name":"MIME-Version",
+            "value":"1.0"
+         },
+         {
+            "name":"From",
+            "value":"Luigi Pugliese \u003cluigip20101@gmail.com\u003e"
+         },
+         {
+            "name":"Date",
+            "value":"Thu, 29 Nov 2018 00:22:00 +0100"
+         },
+         {
+            "name":"Message-ID",
+            "value":"\u003cCAGpWFjkjWsZUH+pWQkf=1qPwO14+kQ=3Yqyyk3UYjHbANTt6vQ@mail.gmail.com\u003e"
+         },
+         {
+            "name":"Subject",
+            "value":"Hi"
+         },
+         {
+            "name":"To",
+            "value":"luigip2010@gmail.com"
+         },
+         {
+            "name":"Content-Type",
+            "value":"multipart/alternative; boundary=\"000000000000c5886a057bc1d66e\""
+         }
+      ],
+      "body":{
+         "size":0
+      },
+      "parts":[
+         {
+            "partId":"0",
+            "mimeType":"text/plain",
+            "filename":"",
+            "headers":[
+               {
+                  "name":"Content-Type",
+                  "value":"text/plain; charset=\"UTF-8\""
+               }
+            ],
+            "body":{
+               "size":6,
+               "data":"SGVsbw0K"
+            }
+         },
+         {
+            "partId":"1",
+            "mimeType":"text/html",
+            "filename":"",
+            "headers":[
+               {
+                  "name":"Content-Type",
+                  "value":"text/html; charset=\"UTF-8\""
+               }
+            ],
+            "body":{
+               "size":28,
+               "data":"PGRpdiBkaXI9ImF1dG8iPkhlbG88L2Rpdj4NCg=="
+            }
+         }
+      ]
+   },
+   "sizeEstimate":4693
+}
