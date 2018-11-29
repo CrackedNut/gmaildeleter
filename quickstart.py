@@ -80,6 +80,20 @@ def GetMessage(service, user_id, msg_id):
     except errors.HttpError as error:
         print('An error occurred: %s' % error)
 
+def MessageToJson(message, file_name):
+    with open(f"./{file_name}.json", "w") as f:
+        messageToJson = json.dumps(message, sort_keys=True, indent=4)
+        f.write(messageToJson.replace("'", '""'))
+        return messageToJson
+
+def ParseEmail(message):
+    sender = str(message["payload"]["headers"][16]["value"])
+    date = str(message["payload"]["headers"][17]["value"])
+    contentpre = (str(base64.urlsafe_b64decode(str.encode(message["payload"]["parts"][0]["body"]["data"])))).replace("\\r\\n", "\n")
+    content = contentpre[2:len(contentpre)-1]
+    parsedMessage = {"sender": sender, "date": date, "data": content}
+    return parsedMessage
+
 def main():
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail labels.
@@ -128,9 +142,12 @@ def main():
     for m in msglist:
         print("{}: {}".format(m["snippet"], m["id"]))
 
-    with open("./mesg.json", "w") as f:
-        messageToJson = json.dumps(msglist[0], sort_keys=True, indent=4)
-        f.write(messageToJson.replace("'", '""'))
+    parsedthing = ParseEmail(msglist[0])
+    print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')
+
+
+
+
 
 if __name__ == '__main__':
     main()
