@@ -78,7 +78,7 @@ def GetMessage(service, user_id, msg_id):
         #print(f"snippet: {message['snippet']}\n\n")
         return message
     except errors.HttpError as error:
-        print('An error occurred: %s' % error)
+        print(f"An error occurred {error}")
 
 def MessageToJson(message, file_name):
     with open(f"./{file_name}.json", "w") as f:
@@ -93,6 +93,13 @@ def ParseEmail(message):
     content = contentpre[2:len(contentpre)-1]
     parsedMessage = {"sender": sender, "date": date, "data": content}
     return parsedMessage
+
+def TrashMessage(service, user_id, msg_id): #Change later to delete
+    try:
+        service.users().messages().delete(userId=user_id, id=msg_id).execute()
+        print(f'Message with id: {msg_id} trashed successfully.')
+    except errors.HttpError as error:
+        print(f"An error occurred {error}")
 
 def main():
     """Shows basic usage of the Gmail API.
@@ -139,12 +146,20 @@ def main():
     for x in messagesFromMe:
         msglist.append(GetMessage(service, "me", x["id"]))
 
-    for m in msglist:
-        print("\n\n{}) {}: {}".format(msglist.index(m), m["snippet"], m["id"]))
+    print("\n\n")
 
-    parsedthing = ParseEmail(msglist[1])
+    for m in msglist:
+        print("{}) {}: {}".format(msglist.index(m), m["snippet"], m["id"]))
+
+    chosen = int(input("\nChoose: "))
+
+    parsedthing = ParseEmail(msglist[chosen])
     print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')
 
+    delm = str(input("Delete no = exit: "))
+
+    if delm != "no":
+        TrashMessage(service, "me", msglist[int(delm)]["id"])
 
 
 if __name__ == '__main__':
