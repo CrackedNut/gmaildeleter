@@ -140,10 +140,10 @@ def main():
         msglist.append(GetMessage(service, "me", x["id"]))
 
     for m in msglist:
-        print("{}: {}".format(m["snippet"], m["id"]))
+        print("\n\n{}) {}: {}".format(msglist.index(m), m["snippet"], m["id"]))
 
-    """parsedthing = ParseEmail(msglist[0])
-    print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')"""
+    parsedthing = ParseEmail(msglist[1])
+    print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')
 
 
 
