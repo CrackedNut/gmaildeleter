@@ -142,10 +142,8 @@ def main():
     for m in msglist:
         print("{}: {}".format(m["snippet"], m["id"]))
 
-    parsedthing = ParseEmail(msglist[0])
-    print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')
-
-
+    """parsedthing = ParseEmail(msglist[0])
+    print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')"""
 
 
 
