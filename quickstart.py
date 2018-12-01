@@ -1,17 +1,3 @@
-# Copyright 2018 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 # [START gmail_quickstart]
 from __future__ import print_function
 from googleapiclient.discovery import build
@@ -47,7 +33,6 @@ def ListMessagesWithMatchingQuery(service, user_id, query=""):
 def GetMessage(service, user_id, msg_id):
     try:
         message = service.users().messages().get(userId=user_id, id=msg_id).execute()
-        #print(f"snippet: {message['snippet']}\n\n")
         return message
     except errors.HttpError as error:
         print(f"An error occurred {error}")
@@ -73,25 +58,34 @@ def main():
     service = Auntenticate()
 
     while True:
+        print()
         toaster = ToastNotifier()
         sendermail = str(input("Sender: "))
+
+        if sendermail == "exit" or sendermail == "EXIT" or sendermail == "Exit":
+            break
+
         messagesFromMe = ListMessagesWithMatchingQuery(service, "me", f"from:{sendermail}")
         msglist = []
 
         for x in messagesFromMe:
             msglist.append(GetMessage(service, "me", x["id"]))
-        toaster.show_toast(f"{len(msglist)} found")
+        toaster.show_toast("Finding Done!",f"{len(msglist)} found", duration = 2)
 
-        print("\n\n")
+        print("\n")
 
         for m in msglist:
-            print("{}) {}: {}".format(msglist.index(m), m["snippet"], m["id"]))
+            print(f'{msglist.index(m)}) { m["snippet"]}: {m["id"]}')
 
         deleted = 0
+        print("\n")
 
         for m in msglist:
             deleted = TrashMessage(service, "me", m["id"], deleted)
-        toaster.show_toast("Done!", f"{deleted} mails trashed")
+        print(f"Trashed {deleted} messages")
+        toaster.show_toast("Trashing done!", f"{deleted} mails trashed", duration = 2, threaded=True)
+
+    print("done!")
 
 if __name__ == '__main__':
     main()
