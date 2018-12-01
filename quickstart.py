@@ -21,39 +21,11 @@ from apiclient import errors
 import base64
 import email
 import json
+from win10toast import ToastNotifier
 
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://mail.google.com/', "https://www.googleapis.com/auth/gmail.labels"]
-
-def MakeLabel(label_name, mlv="show", llv="labelShow"):
-    label = {"messageListVisibility" : mlv,
-             "name" : label_name,
-             "labelListView" : llv}
-    return label
-
-def CreateLabel(servicel, userId, label_object):
-    try:
-        label = servicel.users().labels().create(userId=userId, body=label_object).execute()
-        print(label["id"])
-        return label
-    except errors.HttpError as error:
-        print(f"An error occurred {error}")
-
-def DeleteLabel(service, user_id, label_id):
-    try:
-        service.users().labels().delete(userId=user_id, id=label_id).execute()
-        print(f"Label {label_id} deleted")
-    except errors.HttpError as error:
-        print(f"error: {error}")
-
-def GetLabel(service, user_id, label_id):
-    try:
-        label = service.users().labels().get(userId=user_id, id=label_id).execute()
-        #print(f"label {label.getName()} retrieved")
-        print(label)
-    except errors.HttpError as error:
-        print(f"An error occurred {error}")
 
 def ListMessagesWithMatchingQuery(service, user_id, query=""):
     try:
@@ -80,87 +52,46 @@ def GetMessage(service, user_id, msg_id):
     except errors.HttpError as error:
         print(f"An error occurred {error}")
 
-def MessageToJson(message, file_name):
-    with open(f"./{file_name}.json", "w") as f:
-        messageToJson = json.dumps(message, sort_keys=True, indent=4)
-        f.write(messageToJson.replace("'", '""'))
-        return messageToJson
-
-def ParseEmail(message):
-    sender = str(message["payload"]["headers"][16]["value"])
-    date = str(message["payload"]["headers"][17]["value"])
-    contentpre = (str(base64.urlsafe_b64decode(str.encode(message["payload"]["parts"][0]["body"]["data"])))).replace("\\r\\n", "\n")
-    content = contentpre[2:len(contentpre)-1]
-    parsedMessage = {"sender": sender, "date": date, "data": content}
-    return parsedMessage
-
-def TrashMessage(service, user_id, msg_id): #Change later to delete
+def TrashMessage(service, user_id, msg_id, x): #Change later to delete
     try:
-        service.users().messages().delete(userId=user_id, id=msg_id).execute()
+        service.users().messages().trash(userId=user_id, id=msg_id).execute()
         print(f'Message with id: {msg_id} trashed successfully.')
+        return x+1
     except errors.HttpError as error:
         print(f"An error occurred {error}")
 
-def main():
-    """Shows basic usage of the Gmail API.
-    Lists the user's Gmail labels.
-    """
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
+def Auntenticate():
     store = file.Storage('token.json')
     creds = store.get()
     if not creds or creds.invalid:
         flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
         creds = tools.run_flow(flow, store)
     service = build('gmail', 'v1', http=creds.authorize(Http()))
+    return service
 
-    # Call the Gmail API
-    results = service.users().labels().list(userId='me').execute()
-    labels = results.get('labels', [])
+def main():
+    service = Auntenticate()
 
-    """labelname = str(input("name: ")) #Creates New Label
-    #newlab = CreateLabel(service, "me", MakeLabel(labelname))"""
+    while True:
+        toaster = ToastNotifier()
+        sendermail = str(input("Sender: "))
+        messagesFromMe = ListMessagesWithMatchingQuery(service, "me", f"from:{sendermail}")
+        msglist = []
 
-    if not labels:
-        print('No labels found.')
-    else:
-        print('Labels:')
-        for label in labels:
-            print(f"{labels.index(label)}) {label['name']}: {label['id']}")
+        for x in messagesFromMe:
+            msglist.append(GetMessage(service, "me", x["id"]))
+        toaster.show_toast(f"{len(msglist)} found")
 
-    """idtodel = str(input("Id of label to delete: ")) #Deletes Existing Label
-    DeleteLabel(service, "me", idtodel)"""
+        print("\n\n")
 
-    #idtoget = str(input("Id to get: "))
-    #GetLabel(service, "me", idtoget)
+        for m in msglist:
+            print("{}) {}: {}".format(msglist.index(m), m["snippet"], m["id"]))
 
-    #print(ListMessagesWithMatchingQuery(service, "me", "from:luigip2010@gmail.com"))
+        deleted = 0
 
-    #msg1 = GetMessage(service, "me", "167523bb6520bbba")
-
-    messagesFromMe = ListMessagesWithMatchingQuery(service, "me", "from:luigip20101@gmail.com")
-
-    msglist = []
-
-    for x in messagesFromMe:
-        msglist.append(GetMessage(service, "me", x["id"]))
-
-    print("\n\n")
-
-    for m in msglist:
-        print("{}) {}: {}".format(msglist.index(m), m["snippet"], m["id"]))
-
-    chosen = int(input("\nChoose: "))
-
-    parsedthing = ParseEmail(msglist[chosen])
-    print(f'\n\nFrom: {parsedthing["sender"]}   {parsedthing["date"]}\n\n\n{parsedthing["data"]}')
-
-    delm = str(input("Delete no = exit: "))
-
-    if delm != "no":
-        TrashMessage(service, "me", msglist[int(delm)]["id"])
-
+        for m in msglist:
+            deleted = TrashMessage(service, "me", m["id"], deleted)
+        toaster.show_toast("Done!", f"{deleted} mails trashed")
 
 if __name__ == '__main__':
     main()
